@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Input Field</title>
+</head>
+<body>
+    <h1>Enter the value</h1>
+
+    <input type="text" id="inputValue" placeholder="Type month number">
+    <button onclick="showSeason()">Submit</button>
+
+    <p id="result"></p>
+
+    <script>
+        function showSeason() {
+            let month = parseInt(document.getElementById("inputValue").value);
+            let season = "";
+
+            switch (month) {
+                case 1:
+                    season = "Winter";
+                    break;
+                case 2:
+                    season = "Summer";
+                    break;
+                case 3:
+                    season = "Autumn";
+                    break;
+                case 4:
+                    season = "Monsoon";
+                    break;
+                default:
+                    season = "Invalid month number!";
+            }
+
+            document.getElementById("result").innerText = season;
+        }
+    </script>
+</body>
+</html>

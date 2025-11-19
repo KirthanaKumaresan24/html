@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Application Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e5e6eb;
+            padding: 20px;
+        }
+        .container {
+            background-color: #201799;
+            color: #fff;
+            padding: 30px;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+        input, select, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        label {
+            font-weight: bold;
+        }
+        p#error {
+            color: yellow;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Application Form</h2>
+
+    <form id="appForm">
+        <label>Full Name:</label>
+        <input type="text" id="fullname" required>
+
+        <label>Date of Birth:</label>
+        <input type="date" id="dob" required>
+
+        <label>Email:</label>
+        <input type="email" id="email" required>
+
+        <label>Phone Number:</label>
+        <input type="tel" id="phone" required>
+
+        <label>Position Applying For:</label>
+        <select id="position" required>
+            <option value="">-- Select --</option>
+            <option value="Manager">Manager</option>
+            <option value="Assistant">Assistant</option>
+            <option value="Developer">Developer</option>
+        </select>
+
+        <label>Gender:</label><br><br>
+        <input type="radio" name="gender" value="Male"> Male
+        <input type="radio" name="gender" value="Female"> Female<br><br>
+
+        <label>Additional Info:</label>
+        <textarea id="info" rows="3"></textarea>
+
+        <button type="submit">Submit Application</button>
+    </form>
+
+    <p id="error"></p>
+</div>
+
+<script>
+document.getElementById("appForm").addEventListener("submit", function(e){
+    e.preventDefault();
+
+    let fullname = document.getElementById("fullname").value.trim();
+    let dob = document.getElementById("dob").value;
+    let email = document.getElementById("email").value.trim();
+    let phone = document.getElementById("phone").value.trim();
+    let position = document.getElementById("position").value;
+    let gender = document.querySelector("input[name='gender']:checked");
+    let info = document.getElementById("info").value;
+    let errorBox = document.getElementById("error");
+
+    // Validation
+    if(fullname.length < 3){
+        errorBox.textContent = "Full name must be at least 3 characters.";
+        return;
+    }
+    if(!dob){
+        errorBox.textContent = "Select your Date of Birth.";
+        return;
+    }
+    if(!email.includes("@") || !email.includes(".")){
+        errorBox.textContent = "Enter a valid email.";
+        return;
+    }
+    if(!/^\d{10}$/.test(phone)){
+        errorBox.textContent = "Phone number must be 10 digits.";
+        return;
+    }
+    if(position === ""){
+        errorBox.textContent = "Select a position.";
+        return;
+    }
+    if(!gender){
+        errorBox.textContent = "Select gender.";
+        return;
+    }
+
+    // Redirect with all data
+    let url = "submit.html"
+            + "?fullname=" + encodeURIComponent(fullname)
+            + "&dob=" + encodeURIComponent(dob)
+            + "&email=" + encodeURIComponent(email)
+            + "&phone=" + encodeURIComponent(phone)
+            + "&position=" + encodeURIComponent(position)
+            + "&gender=" + encodeURIComponent(gender.value)
+            + "&info=" + encodeURIComponent(info);
+
+  
+          window.location.href = url;
+
+});
+</script>
+
+</body>
+</html>
