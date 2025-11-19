@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Utility Element</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #e1e1ec;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(5, 5, 5, 0.1);
+        }
+        h2 { color: #333; }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="number"], select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .output-box {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px dashed #007bff;
+            border-radius: 4px;
+            background-color: #e9f5ff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2> Utility Calculator</h2>
+    
+    <label for="connectionType">Connection Type:</label>
+    <select id="connectionType">
+        <option value="domestic">Domestic (RS 5/unit)</option>
+        <option value="commercial">Commercial (RS 10/unit)</option>
+        <option value="metro water">metro water (RS 4/unit)</option>
+    </select>
+    
+    <label for="unitCommand">Units Consumed (Unit Command as Input):</label>
+    <input type="number" id="unitCommand" placeholder="Enter number of units">
+    
+    <button onclick="calculateUtility()">Calculate Utility & Apply Changes</button>
+    
+    <div class="output-box">
+        <h3>Output (Changes)</h3>
+        <p><strong>Rate Applied:</strong> <span id="rateOutput">N/A</span></p>
+        <p><strong>Total Cost:</strong> <span id="costOutput">N/A</span></p>
+        <p><strong>Configuration Change:</strong> <span id="configChangeOutput">N/A</span></p>
+    </div>
+</div>
+
+<script>
+    function calculateUtility() {
+        // Get Input Values
+        const connectionType = document.getElementById('connectionType').value;
+        const units = parseInt(document.getElementById('unitCommand').value);
+
+        // Variables for Utility Logic
+        let ratePerUnit = 0;
+        let configChange = "";
+        let totalCost = 0;
+
+        // --- Core Utility Logic (Switch Case) ---
+        if (isNaN(units) || units < 0) {
+            alert("Please enter a valid number of units.");
+            return;
+        }
+
+        switch (connectionType) {
+            case 'domestic':
+                ratePerUnit = 5;
+                configChange = "Applied";
+                break;
+            case 'commercial':
+                ratePerUnit = 10;
+                configChange = "Applied";
+                break;
+                case 'metro water':
+                    ratePerUnit = 4;
+                    configChange = "Applied"
+                    break;
+            default:
+                ratePerUnit = 0;
+                configChange = "Error: Invalid connection type selected.";
+                break;
+        }
+
+
+        totalCost = units * ratePerUnit;
+
+        // --- Display Output (Changes as Output) ---
+        document.getElementById('rateOutput').innerText = `RS ${ratePerUnit}`;
+        document.getElementById('costOutput').innerText = `RS ${totalCost}`;
+        // Using innerHTML to render the bold text in the config change
+        document.getElementById('configChangeOutput').innerHTML = configChange;
+    }
+
+    // Run once on load for initial display
+    window.onload = calculateUtility; 
+</script>
+
+</body>
+</html>
